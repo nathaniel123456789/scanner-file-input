@@ -1,6 +1,7 @@
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 
 /**
  * Average each row of ten test scores
@@ -18,63 +19,34 @@ public class ScannerReadCSVFile
         // Set the delimiter as a new-line character so we can read the
         // data one line at a time
         scanner.useDelimiter("\n");
+        
+        int lines = 1; //Holds value for line number
 
         // Continue while there's still data in the file to be read
         while (scanner.hasNext()) {
             // Read the next line of the file
             String line = scanner.nextLine();
-            System.out.println(line);
-
-            // line now contains a line of comma-separated numbers
-            // representing 10 test scores for each class.
-            //
-            // Your job is to parse the numbers into individual test scores using
-            // another Scanner variable using a comma as the delimiter.  
-            // 
-            // Read the ten test scores and average them together.  The first
-            // number is the class number and the next 10 numbers are the 
-            // test scores.  
-            //
-            // You need to compute the average and print for each class the class
-            // number, then the average score.  The first few lines should look
-            // like this:
-            //
-            // Class: Avg score
-            // 2125:  55
-            // 1628:  47
-            //
-            // Pay attention to the spacing on your output
-            //
-            // Write your code in the space below!
-            int Lines = 1;
-            Scanner scan = new Scanner(line);
-            scan.useDelimiter(",");
-            int a = 0; 
-            int testscore = 0;
+            Scanner nums = new Scanner(line);
+            nums.useDelimiter(",");
             int sum = 0;
-            String classsec = "Class Section";
-            while (scan.hasNextInt()) {
-                a = 0;
-                
-                if (Lines == 1) {
-                    System.out.println("Class Section" + ";" + sum);
+            int sec = 0;
+            if (lines == 1) {
+                System.out.println("Class section" + ": " + "avg");
+            } else {
+                while (nums.hasNext()) {
+                    int i = nums.nextInt();
+                    if (i <= 999) {
+                        sum += i;
+                    } else {
+                        sec = i;
+                    }
                 }
-                while (a < 10) {
-                    int score = scan.nextInt();
-                    if ( score > 100) {
-                        String str = score;
-                        System.out.println(str);
-                        sum += score;
-                    }
-                    else {
-                        
-                    }
-
-                    }
-                a++;
-                }     
+                System.out.println(sec + ": " + (sum / 10));
             }
+            lines++;
         }
+    }
+
     public static void main (String[] args) {
         try {
             ScannerReadCSVFile srCsv = new ScannerReadCSVFile();
